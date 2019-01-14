@@ -1,0 +1,16 @@
+mat-tree {
+    text-align: center;
+    margin: 20px auto 0 auto;
+    display: table;
+}
+
+.treeForm mat-form-field{
+    margin-right: 10px;
+}
+
+.edit {
+    margin-left: 5px;
+}
+.edit mat-icon {
+    font-size: 18px;
+}

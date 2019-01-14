@@ -1,0 +1,70 @@
+<mat-tree [dataSource]="dataSource" [treeControl]="treeControl" cdkDropList (cdkDropListDropped)="drop($event)"
+(cdkDropListExited)="dragExit($event)" [cdkDropListData]="dataSource">
+  <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding cdkDrag [cdkDragData]="node">
+    <button mat-icon-button disabled></button>
+    <div *ngIf="node.edit">
+      <mat-form-field>
+        <input matInput #itemValue
+        [(ngModel)]="node.item.name" placeholder="Name">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-select [(value)]="node.item.type">
+          <mat-option value="pdf">PDF</mat-option>
+          <mat-option value="doc">DOC</mat-option>
+          <mat-option value="png">Png</mat-option>
+          <mat-option value="jpg">Jpg</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button mat-button (click)="node.edit=!node.edit">
+          save
+        </button>
+    </div>
+    <div *ngIf="!node.edit">
+      {{node.item.name}} : {{node.item.type}}
+      <button mat-icon-button class="edit">
+        <mat-icon class="mat-icon-rtl-mirror" (click)="node.edit=!node.edit">
+          edit
+        </mat-icon>
+      </button>
+    </div>
+  </mat-tree-node>
+
+  <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding cdkDrag [cdkDragData]="node">
+    <button mat-icon-button matTreeNodeToggle
+            [attr.aria-label]="'toggle ' + node.filename">
+      <mat-icon class="mat-icon-rtl-mirror">
+        {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+      </mat-icon>
+    </button>
+    <div *ngIf="node.edit" class="treeForm">
+      <mat-form-field>
+        <input matInput #itemValue
+        [(ngModel)]="node.item.name" placeholder="Name">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-select [(value)]="node.item.type">
+          <mat-option value="pdf">PDF</mat-option>
+          <mat-option value="doc">DOC</mat-option>
+          <mat-option value="png">Png</mat-option>
+          <mat-option value="jpg">Jpg</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button mat-button (click)="node.edit=!node.edit">
+        save
+      </button>
+    </div>
+
+    <div *ngIf="!node.edit">
+      {{node.item.name}} : {{node.item.type}}
+      <button mat-icon-button class="edit">
+        <mat-icon class="mat-icon-rtl-mirror" (click)="node.edit=!node.edit">
+          edit
+        </mat-icon>
+      </button>
+
+    </div>
+
+    <mat-progress-bar *ngIf="node.isLoading" mode="indeterminate"
+    class="example-tree-progress-bar"></mat-progress-bar>
+  </mat-tree-node>
+</mat-tree>
